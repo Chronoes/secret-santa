@@ -1,0 +1,57 @@
+<section class="gifter">
+  <h2><%= gettext("hello.name", name: @user.name)%></h2>
+  <p>
+    <%= if is_nil(@receiver) do %>
+      <%= gettext("noTarget") %>
+    <% else %>
+      <%= raw gettext("secretSanta.name", name: ~s(<span class="text-bold">#{@receiver.name}</span>)) %>
+    <% end %>
+  </p>
+  <%= form_for @conn, Routes.wish_path(@conn, :change_wish), fn _f -> %>
+  <div class="form-group">
+    <label class="d-block" for="wish"><%= gettext("yourWish") %></label>
+    <textarea name="wish" id="wish" rows="3"><%= if Enum.empty?(@user.wishes) do "" else hd(@user.wishes).wish end %></textarea>
+  </div>
+  <input type="hidden" name="user_id" value="<%= @user.id %>">
+  <button type="submit" class="btn btn-primary"><%= gettext("changeWish") %></button>
+  <% end %>
+</section>
+
+<section class="wishes">
+<%= if !Enum.empty?(@wishes) do %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= gettext("name") %></th>
+      <th><%= gettext("wish") %></th>
+      <th><%= gettext("updated") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for wish <- @wishes do %>
+    <tr>
+      <td><%= wish.user.name %></td>
+      <td><%= convert_to_hyperlinks(wish.wish) %></td>
+      <td><%= SecretSanta.Helpers.format_short_date(wish.updated_at |> NaiveDateTime.add(2*3600, :second)) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+</section>
+
+<%= if @user.is_admin do %>
+<hr>
+<section class="admin">
+  <h2><%= gettext("adminSection") %></h2>
+  <%= form_for @conn, Routes.wish_path(@conn, :create_pool), fn _f -> %>
+  <ul class="checkbox-list">
+    <%= for user <- @users do %>
+    <li><label><input type="checkbox" name="receivers[]" value="<%= user.id %>" checked> <%= user.name %></label></li>
+    <% end %>
+  </ul>
+
+  <button type="submit" class="btn btn-primary"><%= gettext("createPool") %></button>
+  <% end %>
+</section>
+<% end %>

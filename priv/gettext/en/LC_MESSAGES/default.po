@@ -1,0 +1,78 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: en\n"
+"Plural-Forms: nplurals=2\n"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/layout/app.html.eex:7
+#: lib/secret_santa_web/templates/layout/app.html.eex:13
+msgid "christmas"
+msgstr "Christmas"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:2
+msgid "hello.name"
+msgstr "Hello, %{name}"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/auth/login.html.eex:8
+msgid "login"
+msgstr "Login"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:26
+msgid "name"
+msgstr "Name"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:5
+msgid "noTarget"
+msgstr "You have no target yet"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/auth/login.html.eex:4
+msgid "password"
+msgstr "Password"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:7
+msgid "secretSanta.name"
+msgstr "You will be a Secret Santa to %{name}"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:28
+msgid "updated"
+msgstr "Updated"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:27
+msgid "wish"
+msgstr "Wish"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:47
+msgid "adminSection"
+msgstr "Admin"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:17
+msgid "changeWish"
+msgstr "Change wish"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:55
+msgid "createPool"
+msgstr "Create pool"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:13
+msgid "yourWish"
+msgstr "Your wish"

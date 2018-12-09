@@ -1,0 +1,7 @@
+Tere, <%= @gifter.name %>!
+
+Loosimise tulemusena ootab su poolt kingitust <%= @receiver.name %>.
+
+Oma soovi avalikustamiseks ja teiste soovide vaatamiseks logi sisse aadressil <%= @login_url %>
+Sinu parooliks on
+<%= @gifter.plain_password %>

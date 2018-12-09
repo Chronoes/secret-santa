@@ -1,0 +1,10 @@
+<section class="login">
+  <%= form_for @conn, Routes.auth_path(@conn, :auth, @user_id), fn _f -> %>
+    <div class="form-group">
+      <label for="password"><%= gettext("password") %></label>
+      <input type="password" name="password" id="password">
+    </div>
+    <input type="hidden" name="user_id" value="<%= @user_id %>">
+    <button type="submit" class="btn btn-primary"><%= gettext("login") %></button>
+  <% end %>
+</section>
