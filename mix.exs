@@ -45,7 +45,8 @@ defmodule SecretSanta.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:bamboo, "~> 1.1"},
-      {:bamboo_smtp, "~> 1.6.0"}
+      {:bamboo_smtp, "~> 1.6.0"},
+      {:distillery, "~> 2.0"}
     ]
   end
 
