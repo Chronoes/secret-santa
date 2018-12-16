@@ -13,6 +13,5 @@ defmodule SecretSanta.Repo.Migrations.CreateGiftingPool do
     create index(:gifting_pool, [:gifter_id])
     create index(:gifting_pool, [:receiver_id])
     create unique_index(:gifting_pool, [:year, :gifter_id])
-    create unique_index(:gifting_pool, [:year, :receiver_id])
   end
 end

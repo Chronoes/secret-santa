@@ -13,7 +13,7 @@ defmodule SecretSanta.GiftingPool do
   @doc false
   def changeset(gifting_pool, attrs) do
     gifting_pool
-    |> cast(attrs, [:year])
+    |> cast(attrs, [:year, :gifter_id, :receiver_id])
     |> validate_required([:year])
   end
 end

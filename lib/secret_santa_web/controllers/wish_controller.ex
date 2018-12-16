@@ -45,10 +45,10 @@ defmodule SecretSantaWeb.WishController do
        |> Repo.get_by(year: current_year, gifter_id: gifter.id)
        |> Repo.preload([:gifter, :receiver]) || %SecretSanta.GiftingPool{})
       |> SecretSanta.GiftingPool.changeset(%{
-        year: current_year
+        year: current_year,
+        gifter_id: gifter.id,
+        receiver_id: receiver.id
       })
-      |> Ecto.Changeset.put_assoc(:gifter, gifter)
-      |> Ecto.Changeset.put_assoc(:receiver, receiver)
       |> Repo.insert_or_update!()
 
       SecretSantaWeb.Emails.gifter_email(gifter.email, %{
