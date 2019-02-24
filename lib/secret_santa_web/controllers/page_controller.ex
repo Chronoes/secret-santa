@@ -1,6 +1,7 @@
 defmodule SecretSantaWeb.PageController do
   use SecretSantaWeb, :controller
-  import Ecto.Query
+  alias SecretSanta.Accounts
+  alias SecretSanta.Gifting
 
   plug :layout_assigns
 
@@ -8,13 +9,11 @@ defmodule SecretSantaWeb.PageController do
 
   @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
-    current_user = get_session(conn, "user") || %SecretSanta.User{}
+    current_user = get_session(conn, "user") || %Accounts.User{}
     current_year = conn.assigns.year
 
     wishes =
-      SecretSanta.Wish
-      |> where(year: ^current_year)
-      |> SecretSanta.Repo.all()
+      Gifting.list_current_wishes(current_year)
       |> SecretSanta.Repo.preload([:user])
 
     current_user = %{
@@ -24,16 +23,12 @@ defmodule SecretSantaWeb.PageController do
 
     users =
       if current_user.is_admin do
-        SecretSanta.User |> SecretSanta.Repo.all()
+        Accounts.list_users()
       else
         []
       end
 
-    gifting_pool =
-      SecretSanta.GiftingPool
-      |> where(year: ^current_year, gifter_id: ^current_user.id)
-      |> SecretSanta.Repo.one()
-      |> SecretSanta.Repo.preload([:receiver])
+    gifting_pool = Gifting.get_current_gifting_pair(current_year, current_user)
 
     render(conn, "index.html", %{
       user: current_user,

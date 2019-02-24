@@ -1,5 +1,6 @@
 defmodule SecretSantaWeb.AuthController do
   use SecretSantaWeb, :controller
+  alias SecretSanta.Accounts
 
   plug :layout_assigns
 
@@ -10,7 +11,7 @@ defmodule SecretSantaWeb.AuthController do
 
   @spec auth(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def auth(conn, %{"password" => password} = params) do
-    case get_user(params["id"], password) do
+    case Accounts.authenticate_user(params["id"], password) do
       nil ->
         conn
         |> put_flash(:error, dgettext("errors", "invalidLogin"))
@@ -18,18 +19,6 @@ defmodule SecretSantaWeb.AuthController do
 
       user ->
         conn |> put_session("user", user) |> redirect(to: "/")
-    end
-  end
-
-  defp get_user("", _password), do: nil
-
-  defp get_user(user_id, password) do
-    user = SecretSanta.Repo.get!(SecretSanta.User, user_id)
-
-    if !is_nil(user) and Bcrypt.verify_pass(password, user.password) do
-      user
-    else
-      nil
     end
   end
 end

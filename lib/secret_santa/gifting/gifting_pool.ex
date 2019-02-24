@@ -1,11 +1,12 @@
-defmodule SecretSanta.GiftingPool do
+defmodule SecretSanta.Gifting.GiftingPool do
   use Ecto.Schema
   import Ecto.Changeset
+  alias SecretSanta.Accounts.User
 
   schema "gifting_pool" do
     field :year, :integer
-    belongs_to :gifter, SecretSanta.User
-    belongs_to :receiver, SecretSanta.User
+    belongs_to :gifter, User
+    belongs_to :receiver, User
 
     timestamps()
   end

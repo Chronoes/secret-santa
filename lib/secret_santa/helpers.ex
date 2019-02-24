@@ -29,7 +29,7 @@ defmodule SecretSanta.Helpers do
     [?0..?9, ?A..?Z, ?a..?z] |> Enum.concat() |> Enum.take_random(length) |> List.to_string()
   end
 
-  @spec format_short_date(DateTime.t()) :: binary()
+  @spec format_short_date(DateTime.t() | NaiveDateTime.t()) :: binary()
   def format_short_date(datetime) do
     "#{date_zfill(datetime.day)}.#{date_zfill(datetime.month)} #{date_zfill(datetime.hour)}:#{
       date_zfill(datetime.minute)

@@ -1,6 +1,7 @@
-defmodule SecretSanta.User do
+defmodule SecretSanta.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias SecretSanta.Gifting.{Wish, GiftingPool}
 
   schema "users" do
     field :name, :string
@@ -8,9 +9,9 @@ defmodule SecretSanta.User do
     field :plain_password, :string, virtual: true
     field :email, :string
     field :is_admin, :boolean
-    has_many(:wishes, SecretSanta.Wish)
-    has_many(:gift_targets, SecretSanta.GiftingPool, foreign_key: :gifter_id)
-    has_many(:gift_givers, SecretSanta.GiftingPool, foreign_key: :receiver_id)
+    has_many(:wishes, Wish)
+    has_many(:gift_targets, GiftingPool, foreign_key: :gifter_id)
+    has_many(:gift_givers, GiftingPool, foreign_key: :receiver_id)
 
     timestamps()
   end

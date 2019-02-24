@@ -1,11 +1,12 @@
-defmodule SecretSanta.Wish do
+defmodule SecretSanta.Gifting.Wish do
   use Ecto.Schema
   import Ecto.Changeset
+  alias SecretSanta.Accounts.User
 
   schema "wishes" do
     field :wish, :string
     field :year, :integer
-    belongs_to(:user, SecretSanta.User)
+    belongs_to(:user, User)
 
     timestamps()
   end

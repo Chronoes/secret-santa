@@ -47,7 +47,7 @@
   <%= form_for @conn, Routes.wish_path(@conn, :create_pool), fn _f -> %>
   <ul class="checkbox-list">
     <%= for user <- @users do %>
-    <li><label><input type="checkbox" name="receivers[]" value="<%= user.id %>" checked> <%= user.name %></label></li>
+    <li><label><input type="checkbox" name="receivers[]" value="<%= user.id %>" checked> <%= "#{user.name} (#{user.email})" %></label></li>
     <% end %>
   </ul>
 

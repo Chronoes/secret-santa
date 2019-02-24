@@ -1,7 +1,7 @@
 defmodule SecretSantaWeb.WishController do
   use SecretSantaWeb, :controller
-  alias SecretSanta.Repo
-  import Ecto.Query
+  alias SecretSanta.Accounts
+  alias SecretSanta.Gifting
 
   plug :layout_assigns
 
@@ -9,14 +9,9 @@ defmodule SecretSantaWeb.WishController do
     current_user = get_session(conn, "user")
     current_year = conn.assigns.year
 
-    wish =
-      (SecretSanta.Wish
-       |> where(year: ^current_year, user_id: ^current_user.id)
-       |> Repo.one()
-       |> Repo.preload(:user) || %SecretSanta.Wish{})
-      |> SecretSanta.Wish.changeset(%{year: current_year, wish: wish_text})
-      |> Ecto.Changeset.put_assoc(:user, current_user)
-      |> Repo.insert_or_update!()
+    _wish =
+      (Gifting.get_current_wish(current_user, current_year) || %Gifting.Wish{})
+      |> Gifting.upsert_wish(%{year: current_year, wish: wish_text, user: current_user})
 
     conn |> redirect(to: "/")
   end
@@ -25,31 +20,17 @@ defmodule SecretSantaWeb.WishController do
     current_year = conn.assigns.year
 
     users =
-      SecretSanta.User
-      |> where([u, w], u.id in ^receivers)
-      |> Repo.all()
-      |> Repo.preload(wishes: from(w in SecretSanta.Wish, where: w.year == ^current_year))
-      |> Enum.map(fn user ->
-        pw = SecretSanta.Helpers.generate_password()
-
-        SecretSanta.User.changeset(user, %{
-          plain_password: pw,
-          password: Bcrypt.hash_pwd_salt(pw)
-        })
-        |> Repo.update!()
-      end)
+      Gifting.get_gift_receivers(current_year, receivers)
+      |> Enum.map(&Accounts.change_user_password/1)
 
     SecretSanta.Helpers.pair_up(users)
     |> Enum.each(fn {gifter, receiver} ->
-      (SecretSanta.GiftingPool
-       |> Repo.get_by(year: current_year, gifter_id: gifter.id)
-       |> Repo.preload([:gifter, :receiver]) || %SecretSanta.GiftingPool{})
-      |> SecretSanta.GiftingPool.changeset(%{
+      (Gifting.get_current_gifting_pair(current_year, gifter) || %Gifting.GiftingPool{})
+      |> Gifting.upsert_gifting_pool(%{
         year: current_year,
-        gifter_id: gifter.id,
-        receiver_id: receiver.id
+        gifter: gifter,
+        receiver: receiver
       })
-      |> Repo.insert_or_update!()
 
       SecretSantaWeb.Emails.gifter_email(gifter.email, %{
         year: current_year,
