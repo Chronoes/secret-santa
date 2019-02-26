@@ -7,6 +7,15 @@
       <%= raw gettext("secretSanta.name", name: ~s(<span class="text-bold">#{@receiver.name}</span>)) %>
     <% end %>
   </p>
+  <%= if !is_nil(@receiver) do %>
+  <p>
+    <%= if is_nil(@receiver.current_wish) do %>
+      <%= gettext("noCurrentWish") %>
+    <% else %>
+      <span class="text-bold"><%= gettext("receiversWish") %></span>: <%= convert_to_hyperlinks(@receiver.current_wish.wish) %>
+    <% end %>
+  </p>
+  <% end %>
   <%= form_for @conn, Routes.wish_path(@conn, :change_wish), fn _f -> %>
   <div class="form-group">
     <label class="d-block" for="wish"><%= gettext("yourWish") %>
@@ -23,24 +32,22 @@
 
 <section class="wishes">
 <%= if !Enum.empty?(@wishes) do %>
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= gettext("name") %></th>
-      <th><%= gettext("wish") %></th>
-      <th><%= gettext("updated") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= for wish <- @wishes do %>
-    <tr>
-      <td><%= wish.user.name %></td>
-      <td><%= convert_to_hyperlinks(wish.wish) %></td>
-      <td><%= SecretSanta.Helpers.format_short_date(wish.updated_at |> NaiveDateTime.add(2*3600, :second)) %></td>
-    </tr>
+  <h3><%= gettext("allWishes") %></h3>
+  <%= for wish_group <- Enum.chunk_every(@wishes, 3) do %>
+  <div class="card-deck">
+    <%= for wish <- wish_group do %>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"><%= wish.user.name %></h4>
+        <p class="card-text"><%= convert_to_hyperlinks(wish.wish) %></p>
+      </div>
+      <div class="card-footer text-muted">
+        <%= gettext("updated") %>: <%= SecretSanta.Helpers.format_short_date(wish.updated_at |> NaiveDateTime.add(2*3600, :second)) %>
+      </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <% end %>
 <% end %>
 </section>
 

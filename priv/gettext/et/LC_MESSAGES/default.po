@@ -28,11 +28,6 @@ msgid "login"
 msgstr "Logi sisse"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:25
-msgid "name"
-msgstr "Nimi"
-
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:5
 msgid "noTarget"
 msgstr "Hetkel puudub sulle loositud kingisaaja"
@@ -48,37 +43,51 @@ msgid "secretSanta.name"
 msgstr "Loosimise tulemusena on sinu kingisaajaks %{name}"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:27
+#: lib/secret_santa_web/templates/page/index.html.eex:45
 msgid "updated"
 msgstr "Uuendatud"
 
 #, elixir-format
 #: lib/secret_santa_web/controllers/wish_controller.ex:30
-#: lib/secret_santa_web/templates/page/index.html.eex:26
 msgid "wish"
 msgstr "Soov"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:46
+#: lib/secret_santa_web/templates/page/index.html.eex:57
 msgid "adminSection"
 msgstr "Admin"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:16
+#: lib/secret_santa_web/templates/page/index.html.eex:29
 msgid "changeWish"
 msgstr "Muuda soovi"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:54
+#: lib/secret_santa_web/templates/page/index.html.eex:65
 msgid "createPool"
 msgstr "Loo grupp"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:12
+#: lib/secret_santa_web/templates/page/index.html.eex:21
 msgid "yourWish"
 msgstr "Sinu soov"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:12
+#: lib/secret_santa_web/templates/page/index.html.eex:23
 msgid "pleaseAddYourWish"
 msgstr "NB! Soov on lisamata"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:35
+msgid "allWishes"
+msgstr "Kõik soovid"
+
+#, elixir-format, fuzzy
+#: lib/secret_santa_web/templates/page/index.html.eex:13
+msgid "noCurrentWish"
+msgstr "Kingisaajal puudu soov"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:15
+msgid "receiversWish"
+msgstr "Tema soov"

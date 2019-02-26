@@ -27,11 +27,6 @@ msgid "login"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:25
-msgid "name"
-msgstr ""
-
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:5
 msgid "noTarget"
 msgstr ""
@@ -47,37 +42,51 @@ msgid "secretSanta.name"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:27
+#: lib/secret_santa_web/templates/page/index.html.eex:45
 msgid "updated"
 msgstr ""
 
 #, elixir-format
 #: lib/secret_santa_web/controllers/wish_controller.ex:30
-#: lib/secret_santa_web/templates/page/index.html.eex:26
 msgid "wish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:46
+#: lib/secret_santa_web/templates/page/index.html.eex:57
 msgid "adminSection"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:16
+#: lib/secret_santa_web/templates/page/index.html.eex:29
 msgid "changeWish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:54
+#: lib/secret_santa_web/templates/page/index.html.eex:65
 msgid "createPool"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:12
+#: lib/secret_santa_web/templates/page/index.html.eex:21
 msgid "yourWish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:12
+#: lib/secret_santa_web/templates/page/index.html.eex:23
 msgid "pleaseAddYourWish"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:35
+msgid "allWishes"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:13
+msgid "noCurrentWish"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:15
+msgid "receiversWish"
 msgstr ""

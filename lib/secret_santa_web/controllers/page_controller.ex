@@ -20,7 +20,7 @@ defmodule SecretSantaWeb.PageController do
       Map.put(
         current_user,
         :current_wish,
-        Gifting.get_current_wish(current_user, current_year)
+        Enum.find(wishes, fn wish -> wish.user.id == current_user.id end)
       )
 
     users =
@@ -34,11 +34,17 @@ defmodule SecretSantaWeb.PageController do
       Gifting.get_current_gifting_pair(current_year, current_user)
       |> SecretSanta.Repo.preload([:receiver])
 
+    receiver =
+      case gifting_pool && gifting_pool.receiver do
+        nil -> nil
+        rec -> Map.put(rec, :current_wish, Enum.find(wishes, fn wish -> wish.user.id == rec.id end))
+      end
+
     render(conn, "index.html", %{
       user: current_user,
       users: users,
       wishes: wishes,
-      receiver: (gifting_pool && gifting_pool.receiver) || nil
+      receiver: receiver
     })
   end
 
