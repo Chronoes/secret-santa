@@ -10,6 +10,7 @@ defmodule SecretSanta.Accounts.User do
     field :email, :string
     field :is_admin, :boolean
     has_many(:wishes, Wish)
+    field :current_wish, :string, virtual: true
     has_many(:gift_targets, GiftingPool, foreign_key: :gifter_id)
     has_many(:gift_givers, GiftingPool, foreign_key: :receiver_id)
 

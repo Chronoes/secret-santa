@@ -94,6 +94,6 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/controllers/auth_controller.ex:16
+#: lib/secret_santa_web/controllers/auth_controller.ex:17
 msgid "invalidLogin"
 msgstr ""

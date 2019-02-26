@@ -15,6 +15,10 @@ label + input {
   font-weight: bold;
 }
 
+.text-danger {
+  color: tomato;
+}
+
 .alert {
   border: 1px solid darkgray;
   background-color: gainsboro;

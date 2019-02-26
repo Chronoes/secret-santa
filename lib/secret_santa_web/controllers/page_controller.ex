@@ -16,10 +16,12 @@ defmodule SecretSantaWeb.PageController do
       Gifting.list_current_wishes(current_year)
       |> SecretSanta.Repo.preload([:user])
 
-    current_user = %{
-      current_user
-      | wishes: Enum.find(wishes, fn w -> w.user.id == current_user.id end) |> List.wrap()
-    }
+    current_user =
+      Map.put(
+        current_user,
+        :current_wish,
+        Gifting.get_current_wish(current_user, current_year)
+      )
 
     users =
       if current_user.is_admin do
@@ -28,7 +30,9 @@ defmodule SecretSantaWeb.PageController do
         []
       end
 
-    gifting_pool = Gifting.get_current_gifting_pair(current_year, current_user)
+    gifting_pool =
+      Gifting.get_current_gifting_pair(current_year, current_user)
+      |> SecretSanta.Repo.preload([:receiver])
 
     render(conn, "index.html", %{
       user: current_user,

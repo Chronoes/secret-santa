@@ -9,8 +9,12 @@
   </p>
   <%= form_for @conn, Routes.wish_path(@conn, :change_wish), fn _f -> %>
   <div class="form-group">
-    <label class="d-block" for="wish"><%= gettext("yourWish") %></label>
-    <textarea name="wish" id="wish" rows="3"><%= if Enum.empty?(@user.wishes) do "" else hd(@user.wishes).wish end %></textarea>
+    <label class="d-block" for="wish"><%= gettext("yourWish") %>
+      <%= if is_nil(@user.current_wish) do %>
+      <span class="text-danger">(<%= gettext("pleaseAddYourWish") %>)</span>
+      <% end %>
+    </label>
+    <textarea name="wish" id="wish" rows="3"><%= @user.current_wish && @user.current_wish.wish %></textarea>
   </div>
   <input type="hidden" name="user_id" value="<%= @user.id %>">
   <button type="submit" class="btn btn-primary"><%= gettext("changeWish") %></button>

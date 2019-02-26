@@ -116,7 +116,7 @@ defmodule SecretSanta.Accounts do
   def authenticate_user("", _password), do: nil
 
   def authenticate_user(user_id, password) do
-    user = get_user!(user_id)
+    user = Repo.get(User, user_id)
 
     if !is_nil(user) and Bcrypt.verify_pass(password, user.password) do
       user

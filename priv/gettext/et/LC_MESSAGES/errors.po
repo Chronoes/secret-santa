@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 msgid "can't be blank"
-msgstr ""
+msgstr "ei tohi olla tühi"
 
 msgid "has already been taken"
 msgstr ""
@@ -87,6 +87,6 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/controllers/auth_controller.ex:16
+#: lib/secret_santa_web/controllers/auth_controller.ex:17
 msgid "invalidLogin"
 msgstr "Vigane parool"

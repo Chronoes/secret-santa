@@ -49,7 +49,6 @@ defmodule SecretSanta.Gifting do
     Wish
     |> where(year: ^year, user_id: ^user.id)
     |> Repo.one()
-    |> Repo.preload(:user)
   end
 
   @doc """
@@ -92,7 +91,7 @@ defmodule SecretSanta.Gifting do
     wish
     |> Wish.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:user, attrs.user)
-    |> Repo.insert_or_update!()
+    |> Repo.insert_or_update()
   end
 
   @doc """
@@ -243,6 +242,5 @@ defmodule SecretSanta.Gifting do
   def get_current_gifting_pair(year, gifter) do
     GiftingPool
     |> Repo.get_by(year: year, gifter_id: gifter.id)
-    |> Repo.preload([:gifter, :receiver])
   end
 end

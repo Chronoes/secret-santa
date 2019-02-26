@@ -9,11 +9,26 @@ defmodule SecretSantaWeb.WishController do
     current_user = get_session(conn, "user")
     current_year = conn.assigns.year
 
-    _wish =
-      (Gifting.get_current_wish(current_user, current_year) || %Gifting.Wish{})
+    wish =
+      (Gifting.get_current_wish(current_user, current_year) |> SecretSanta.Repo.preload([:user]) || %Gifting.Wish{})
       |> Gifting.upsert_wish(%{year: current_year, wish: wish_text, user: current_user})
 
-    conn |> redirect(to: "/")
+    case wish do
+      {:ok, _cs} ->
+        conn |> redirect(to: Routes.page_path(conn, :index))
+
+      {:error, cs} ->
+        conn
+        |> put_flash(:error, Enum.map(cs.errors, &error_string/1) |> Enum.join("\n"))
+        |> redirect(to: Routes.page_path(conn, :index))
+    end
+  end
+
+  defp error_string({name, {reason, opts}}) do
+    case name do
+      :wish ->
+        "#{gettext("wish")} #{Gettext.dgettext(SecretSantaWeb.Gettext, "errors", reason, opts)}"
+    end
   end
 
   def create_pool(conn, %{"receivers" => receivers} = _params) do
@@ -25,7 +40,8 @@ defmodule SecretSantaWeb.WishController do
 
     SecretSanta.Helpers.pair_up(users)
     |> Enum.each(fn {gifter, receiver} ->
-      (Gifting.get_current_gifting_pair(current_year, gifter) || %Gifting.GiftingPool{})
+      (Gifting.get_current_gifting_pair(current_year, gifter)
+       |> SecretSanta.Repo.preload([:gifter, :receiver]) || %Gifting.GiftingPool{})
       |> Gifting.upsert_gifting_pool(%{
         year: current_year,
         gifter: gifter,
