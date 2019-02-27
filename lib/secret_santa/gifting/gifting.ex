@@ -238,9 +238,16 @@ defmodule SecretSanta.Gifting do
     |> Repo.preload(wishes: from(w in Wish, where: w.year == ^year))
   end
 
-  @spec get_current_gifting_pair(pos_integer(), User.t()) :: GiftingPool.t()
-  def get_current_gifting_pair(year, gifter) do
+  @spec get_current_gifting_pair(pos_integer(), gifter: User.t(), receiver: User.t()) :: GiftingPool.t()
+  def get_current_gifting_pair(year, gifter: gifter) do
     GiftingPool
     |> Repo.get_by(year: year, gifter_id: gifter.id)
   end
+
+  def get_current_gifting_pair(year, receiver: receiver) do
+    GiftingPool
+    |> Repo.get_by(year: year, receiver_id: receiver.id)
+  end
+
+  def get_current_gifting_pair(_year, _opts), do: raise("Missing gifter or receiver")
 end

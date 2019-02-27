@@ -11,6 +11,11 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/emails.ex:10
+#: lib/secret_santa_web/emails.ex:9
 msgid "secretSanta"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/emails.ex:16
+msgid "secretSanta.wishChanged"
 msgstr ""

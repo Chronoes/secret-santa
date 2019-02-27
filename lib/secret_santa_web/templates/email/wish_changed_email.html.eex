@@ -1,0 +1,11 @@
+<p>
+  Tere, <%= @gifter.name %>!
+</p>
+
+<p>
+  <%= @receiver.name %> on muutnud oma soovi!
+</p>
+
+<p>
+  <%= convert_to_hyperlinks(@wish) |> unsafe_to_safe() %>
+</p>

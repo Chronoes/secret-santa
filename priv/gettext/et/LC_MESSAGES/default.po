@@ -48,7 +48,7 @@ msgid "updated"
 msgstr "Uuendatud"
 
 #, elixir-format
-#: lib/secret_santa_web/controllers/wish_controller.ex:30
+#: lib/secret_santa_web/controllers/wish_controller.ex:45
 msgid "wish"
 msgstr "Soov"
 
@@ -82,7 +82,7 @@ msgstr "NB! Soov on lisamata"
 msgid "allWishes"
 msgstr "Kõik soovid"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:13
 msgid "noCurrentWish"
 msgstr "Kingisaajal puudu soov"

@@ -47,7 +47,7 @@ msgid "updated"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/controllers/wish_controller.ex:30
+#: lib/secret_santa_web/controllers/wish_controller.ex:45
 msgid "wish"
 msgstr ""
 

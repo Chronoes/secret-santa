@@ -9,12 +9,27 @@ defmodule SecretSantaWeb.WishController do
     current_user = get_session(conn, "user")
     current_year = conn.assigns.year
 
-    wish =
+    wish_result =
       (Gifting.get_current_wish(current_user, current_year) |> SecretSanta.Repo.preload([:user]) || %Gifting.Wish{})
       |> Gifting.upsert_wish(%{year: current_year, wish: wish_text, user: current_user})
 
-    case wish do
-      {:ok, _cs} ->
+    case wish_result do
+      {:ok, wish} ->
+        case Gifting.get_current_gifting_pair(wish.year, receiver: wish.user)
+             |> SecretSanta.Repo.preload([:gifter]) do
+          nil ->
+            nil
+
+          pair ->
+            SecretSantaWeb.Emails.wish_changed_email(pair.gifter.email, %{
+              year: wish.year,
+              gifter: pair.gifter,
+              receiver: wish.user,
+              wish: wish.wish
+            })
+            |> SecretSanta.Mailer.deliver_later()
+        end
+
         conn |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, cs} ->
@@ -40,7 +55,7 @@ defmodule SecretSantaWeb.WishController do
 
     SecretSanta.Helpers.pair_up(users)
     |> Enum.each(fn {gifter, receiver} ->
-      (Gifting.get_current_gifting_pair(current_year, gifter)
+      (Gifting.get_current_gifting_pair(current_year, gifter: gifter)
        |> SecretSanta.Repo.preload([:gifter, :receiver]) || %Gifting.GiftingPool{})
       |> Gifting.upsert_gifting_pool(%{
         year: current_year,

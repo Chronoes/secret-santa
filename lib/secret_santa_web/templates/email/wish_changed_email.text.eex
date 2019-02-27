@@ -1,0 +1,5 @@
+Tere, <%= @gifter.name %>!
+
+<%= @receiver.name %> on muutnud oma soovi!
+
+<%= @wish %>

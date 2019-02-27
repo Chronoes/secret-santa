@@ -31,7 +31,7 @@ defmodule SecretSantaWeb.PageController do
       end
 
     gifting_pool =
-      Gifting.get_current_gifting_pair(current_year, current_user)
+      Gifting.get_current_gifting_pair(current_year, gifter: current_user)
       |> SecretSanta.Repo.preload([:receiver])
 
     receiver =

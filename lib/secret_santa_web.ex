@@ -41,6 +41,7 @@ defmodule SecretSantaWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      import SecretSantaWeb.HTMLHelpers
       import SecretSantaWeb.ErrorHelpers
       import SecretSantaWeb.Gettext
       alias SecretSantaWeb.Router.Helpers, as: Routes

@@ -12,13 +12,13 @@
     <%= if is_nil(@receiver.current_wish) do %>
       <%= gettext("noCurrentWish") %>
     <% else %>
-      <span class="text-bold"><%= gettext("receiversWish") %></span>: <%= convert_to_hyperlinks(@receiver.current_wish.wish) %>
+      <span class="text-bold"><%= gettext("receiversWish") %></span>: <%= convert_to_hyperlinks(@receiver.current_wish.wish) |> unsafe_to_safe() %>
     <% end %>
   </p>
   <% end %>
   <%= form_for @conn, Routes.wish_path(@conn, :change_wish), fn _f -> %>
   <div class="form-group">
-    <label class="d-block" for="wish"><%= gettext("yourWish") %>
+    <label class="d-block text-bold" for="wish"><%= gettext("yourWish") %>
       <%= if is_nil(@user.current_wish) do %>
       <span class="text-danger">(<%= gettext("pleaseAddYourWish") %>)</span>
       <% end %>
@@ -39,7 +39,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title"><%= wish.user.name %></h4>
-        <p class="card-text"><%= convert_to_hyperlinks(wish.wish) %></p>
+        <%= convert_to_hyperlinks(wish.wish, class: "card-link") |> unsafe_to_safe(attributes: [class: "card-text"]) %>
       </div>
       <div class="card-footer text-muted">
         <%= gettext("updated") %>: <%= SecretSanta.Helpers.format_short_date(wish.updated_at |> NaiveDateTime.add(2*3600, :second)) %>

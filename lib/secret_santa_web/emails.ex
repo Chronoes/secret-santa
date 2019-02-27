@@ -4,11 +4,23 @@ defmodule SecretSantaWeb.Emails do
   import SecretSantaWeb.Gettext
 
   def gifter_email(receiver, assigns) do
-    new_email()
-    |> from("joulud@tarkin.ee")
+    new_santa_email()
     |> to(receiver)
     |> subject(dgettext("email", "secretSanta", year: assigns.year))
-    |> put_text_layout({SecretSantaWeb.LayoutView, "email.text"})
     |> render("gifter_email.text", assigns)
+  end
+
+  def wish_changed_email(receiver, assigns) do
+    new_santa_email()
+    |> to(receiver)
+    |> subject(dgettext("email", "secretSanta.wishChanged", year: assigns.year))
+    |> render(:wish_changed_email, assigns)
+  end
+
+  defp new_santa_email() do
+    new_email()
+    |> from("joulud@tarkin.ee")
+    |> put_text_layout({SecretSantaWeb.LayoutView, "email.text"})
+    |> put_html_layout({SecretSantaWeb.LayoutView, "email.html"})
   end
 end
