@@ -1,9 +1,9 @@
 defmodule SecretSantaWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :secret_santa
 
-  socket "/socket", SecretSantaWeb.UserSocket,
-    websocket: true,
-    longpoll: false
+  # socket "/socket", SecretSantaWeb.UserSocket,
+  #   websocket: true,
+  #   longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -12,8 +12,9 @@ defmodule SecretSantaWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :secret_santa,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: true,
+    only: ~w(css fonts images js robots.txt browserconfig.xml manifest.json),
+    only_matching: ~w(favicon apple-icon android-icon ms-icon)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
