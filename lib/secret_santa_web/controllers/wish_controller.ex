@@ -5,7 +5,7 @@ defmodule SecretSantaWeb.WishController do
 
   plug :layout_assigns
 
-  def change_wish(conn, %{"wish" => wish_text} = _params) do
+  def change_wish(conn, %{"wish" => wish_text} = params) do
     current_user = get_session(conn, "user")
     current_year = conn.assigns.year
 
@@ -30,6 +30,8 @@ defmodule SecretSantaWeb.WishController do
             |> SecretSanta.Mailer.deliver_later()
         end
 
+        process_other_wishes(params, current_user, current_year)
+
         conn |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, cs} ->
@@ -38,6 +40,18 @@ defmodule SecretSantaWeb.WishController do
         |> redirect(to: Routes.page_path(conn, :index))
     end
   end
+
+  defp process_other_wishes(%{"wishes" => wishes} = _params, current_user, current_year) do
+    wishes
+    |> Enum.map(fn {user_id, wish} -> {Accounts.get_user!(user_id), wish} end)
+    |> Enum.filter(fn {user, wish} -> wish != "" && Accounts.is_managed_by?(user, current_user) end)
+    |> Enum.map(fn {user, wish} ->
+      (Gifting.get_current_wish(user, current_year) |> SecretSanta.Repo.preload([:user]) || %Gifting.Wish{})
+      |> Gifting.upsert_wish(%{year: current_year, wish: wish, user: user})
+    end)
+  end
+
+  defp process_other_wishes(_params, _user, _year), do: nil
 
   defp error_string({name, {reason, opts}}) do
     case name do
