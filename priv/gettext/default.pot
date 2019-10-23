@@ -12,7 +12,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/secret_santa_web/templates/layout/app.html.eex:7
-#: lib/secret_santa_web/templates/layout/app.html.eex:13
+#: lib/secret_santa_web/templates/layout/app.html.eex:31
+#: lib/secret_santa_web/templates/layout/app.html.eex:31
 msgid "christmas"
 msgstr ""
 
@@ -42,42 +43,43 @@ msgid "secretSanta.name"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:45
+#: lib/secret_santa_web/templates/page/index.html.eex:59
 msgid "updated"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/controllers/wish_controller.ex:45
+#: lib/secret_santa_web/controllers/wish_controller.ex:59
+#: lib/secret_santa_web/controllers/wish_controller.ex:59
 msgid "wish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:57
+#: lib/secret_santa_web/templates/page/index.html.eex:71
 msgid "adminSection"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:29
+#: lib/secret_santa_web/templates/page/index.html.eex:43
 msgid "changeWish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:65
+#: lib/secret_santa_web/templates/page/index.html.eex:85
 msgid "createPool"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:21
+#: lib/secret_santa_web/templates/page/index.html.eex:22
 msgid "yourWish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:23
+#: lib/secret_santa_web/templates/page/index.html.eex:24
 msgid "pleaseAddYourWish"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/page/index.html.eex:35
+#: lib/secret_santa_web/templates/page/index.html.eex:49
 msgid "allWishes"
 msgstr ""
 
@@ -89,4 +91,15 @@ msgstr ""
 #, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:15
 msgid "receiversWish"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:32
+msgid "otherWishes"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:79
+#: lib/secret_santa_web/templates/page/index.html.eex:79
+msgid "isManagedBy"
 msgstr ""

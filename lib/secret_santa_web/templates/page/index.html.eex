@@ -75,7 +75,8 @@
     <li>
       <label>
       <input type="checkbox" name="receivers[]" value="<%= user.id %>"<%= if Enum.empty?(user.managers) do %> checked<% end %>>
-        <%= "#{user.name} (#{user.email})" %> <%= if !Enum.empty?(user.managers) do %><span class="text-muted"><%=" #{gettext("isManaged")}" %></span><% end %>
+        <%= "#{user.name} (#{user.email})" %>
+        <%= unless Enum.empty?(user.managers) do %><span class="text-muted"><%=" #{gettext("isManagedBy")}: #{Enum.map_join(user.managers, ", ", &(&1.name))}" %></span><% end %>
       </label>
     </li>
     <% end %>
