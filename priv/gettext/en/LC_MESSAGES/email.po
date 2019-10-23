@@ -16,7 +16,7 @@ msgstr ""
 msgid "secretSanta"
 msgstr "Secret Santa %{year}"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/secret_santa_web/emails.ex:16
 msgid "secretSanta.wishChanged"
 msgstr "Secret Santa %{year}"

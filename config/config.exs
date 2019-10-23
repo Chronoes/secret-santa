@@ -7,8 +7,12 @@
 # General application configuration
 use Mix.Config
 
+# TZdata for DateTime functions
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
 config :secret_santa,
-  ecto_repos: [SecretSanta.Repo]
+  ecto_repos: [SecretSanta.Repo],
+  timezone: System.get_env("TZ")
 
 # Configures the endpoint
 config :secret_santa, SecretSantaWeb.Endpoint,

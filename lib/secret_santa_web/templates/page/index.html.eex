@@ -17,15 +17,29 @@
   </p>
   <% end %>
   <%= form_for @conn, Routes.wish_path(@conn, :change_wish), fn _f -> %>
-  <div class="form-group">
-    <label class="d-block text-bold" for="wish"><%= gettext("yourWish") %>
-      <%= if is_nil(@user.current_wish) do %>
-      <span class="text-danger">(<%= gettext("pleaseAddYourWish") %>)</span>
-      <% end %>
-    </label>
-    <textarea name="wish" id="wish" rows="3"><%= @user.current_wish && @user.current_wish.wish %></textarea>
-  </div>
-  <input type="hidden" name="user_id" value="<%= @user.id %>">
+  <fieldset class="wish-inputs">
+    <div class="form-group">
+      <label class="d-block text-bold" for="wish"><%= gettext("yourWish") %>
+        <%= if is_nil(@user.current_wish) do %>
+        <span class="text-danger">(<%= gettext("pleaseAddYourWish") %>)</span>
+        <% end %>
+      </label>
+      <textarea name="wish" id="wish" rows="3"><%= @user.current_wish && @user.current_wish.wish %></textarea>
+    </div>
+  </fieldset>
+
+  <%= if !Enum.empty? @user.managed_users do %>
+  <h3><%= gettext("otherWishes") %></h3>
+  <fieldset class="wish-inputs">
+    <%= for user <- @user.managed_users do %>
+    <div class="form-group">
+      <label class="d-block text-bold" for="wish-<%= user.id %>"><%= user.name %></label>
+      <textarea name="wishes[<%= user.id %>]" id="wish-<%= user.id %>" rows="3"><%= user.current_wish && user.current_wish.wish %></textarea>
+    </div>
+    <% end %>
+  </fieldset>
+  <% end %>
+
   <button type="submit" class="btn btn-primary"><%= gettext("changeWish") %></button>
   <% end %>
 </section>
@@ -42,7 +56,7 @@
         <%= convert_to_hyperlinks(wish.wish, class: "card-link") |> unsafe_to_safe(attributes: [class: "card-text"]) %>
       </div>
       <div class="card-footer text-muted">
-        <%= gettext("updated") %>: <%= SecretSanta.Helpers.format_short_date(wish.updated_at |> NaiveDateTime.add(2*3600, :second)) %>
+        <%= gettext("updated") %>: <%= SecretSanta.Helpers.add_tz_to_datetime(wish.updated_at) |> SecretSanta.Helpers.format_short_date() %>
       </div>
     </div>
     <% end %>
@@ -58,7 +72,13 @@
   <%= form_for @conn, Routes.wish_path(@conn, :create_pool), fn _f -> %>
   <ul class="checkbox-list">
     <%= for user <- @users do %>
-    <li><label><input type="checkbox" name="receivers[]" value="<%= user.id %>" checked> <%= "#{user.name} (#{user.email})" %></label></li>
+    <li>
+      <label>
+      <input type="checkbox" name="receivers[]" value="<%= user.id %>"<%= if Enum.empty?(user.managers) do %> checked<% end %>>
+        <%= "#{user.name} (#{user.email})" %>
+        <%= unless Enum.empty?(user.managers) do %><span class="text-muted"><%=" #{gettext("isManagedBy")}: #{Enum.map_join(user.managers, ", ", &(&1.name))}" %></span><% end %>
+      </label>
+    </li>
     <% end %>
   </ul>
 

@@ -29,6 +29,15 @@ defmodule SecretSanta.Helpers do
     [?0..?9, ?A..?Z, ?a..?z] |> Enum.concat() |> Enum.take_random(length) |> List.to_string()
   end
 
+  @spec add_tz_to_datetime(datetime :: NaiveDateTime.t()) :: DateTime.t()
+  def add_tz_to_datetime(datetime) do
+    {:ok, datetimetz} =
+      DateTime.from_naive!(datetime, "Etc/UTC")
+      |> DateTime.shift_zone(Application.get_env(:secret_santa, :timezone))
+
+    datetimetz
+  end
+
   @spec format_short_date(DateTime.t() | NaiveDateTime.t()) :: binary()
   def format_short_date(datetime) do
     "#{date_zfill(datetime.day)}.#{date_zfill(datetime.month)} #{date_zfill(datetime.hour)}:#{

@@ -71,5 +71,5 @@ config :secret_santa, SecretSanta.Repo,
   username: "postgres",
   password: "postgres",
   database: "secret_santa_dev",
-  hostname: "localhost",
+  hostname: "nyohhira",
   pool_size: 10

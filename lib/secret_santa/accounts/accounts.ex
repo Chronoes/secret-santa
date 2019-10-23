@@ -7,6 +7,7 @@ defmodule SecretSanta.Accounts do
   alias SecretSanta.Repo
 
   alias SecretSanta.Accounts.User
+  alias SecretSanta.Accounts.UserManager
 
   @doc """
   Returns the list of users.
@@ -19,6 +20,7 @@ defmodule SecretSanta.Accounts do
   """
   def list_users do
     Repo.all(User)
+    |> Repo.preload([:managers])
   end
 
   @doc """
@@ -123,5 +125,10 @@ defmodule SecretSanta.Accounts do
     else
       nil
     end
+  end
+
+  @spec is_managed_by?(user :: User.t(), manager :: User.t()) :: bool
+  def is_managed_by?(user, manager) do
+    !is_nil(Repo.get_by(UserManager, user_id: user.id, manager_id: manager.id))
   end
 end
