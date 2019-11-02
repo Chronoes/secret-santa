@@ -47,7 +47,10 @@ defmodule SecretSanta.MixProject do
       {:bamboo, "~> 1.1"},
       {:bamboo_smtp, "~> 1.7"},
       {:distillery, "~> 2.0"},
-      {:tzdata, "~> 1.0.1"}
+      {:tzdata, "~> 1.0.1"},
+      {:ueberauth, "~> 0.6"},
+      {:ueberauth_identity, "~> 0.2"},
+      {:ueberauth_facebook, "~> 0.8"}
     ]
   end
 

@@ -81,7 +81,7 @@ defmodule SecretSantaWeb.WishController do
         year: current_year,
         gifter: gifter,
         receiver: receiver,
-        login_url: Routes.auth_url(conn, :login, gifter.id)
+        login_url: Routes.auth_url(conn, :login_index, username: gifter.name)
       })
       |> SecretSanta.Mailer.deliver_now()
     end)

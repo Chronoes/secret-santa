@@ -4,6 +4,8 @@ defmodule SecretSanta.Accounts do
   """
 
   import Ecto.Query, warn: false
+  alias Ueberauth.Auth
+
   alias SecretSanta.Repo
 
   alias SecretSanta.Accounts.User
@@ -114,16 +116,47 @@ defmodule SecretSanta.Accounts do
     |> Repo.update!()
   end
 
-  @spec authenticate_user(user_id :: binary() | pos_integer(), password :: binary()) :: User.t() | nil
-  def authenticate_user("", _password), do: nil
+  @spec validate_password(user :: binary(), password :: binary()) :: {:ok, User.t()} | :invalid
+  def validate_password("", _password), do: :invalid
 
-  def authenticate_user(user_id, password) do
-    user = Repo.get(User, user_id)
+  def validate_password(user, password) do
+    user = Repo.get_by(User, name: user)
 
     if !is_nil(user) and Bcrypt.verify_pass(password, user.password) do
-      user
+      {:ok, user}
     else
-      nil
+      :invalid
+    end
+  end
+
+  @spec validate_user_from_auth(Ueberauth.Auth.t()) :: :invalid | {:ok, User.t()}
+  def validate_user_from_auth(%Auth{provider: :identity, credentials: credentials, extra: extra} = _auth) do
+    %Auth.Extra{raw_info: raw} = extra
+    %Auth.Credentials{other: %{password: pw}} = credentials
+
+    if Map.has_key?(raw, "username") do
+      validate_password(Map.get(raw, "username"), pw)
+    else
+      :invalid
+    end
+  end
+
+  def validate_user_from_auth(%Auth{provider: :facebook, uid: uid, info: info} = _auth) do
+    user = Repo.get_by(User, facebook_id: uid)
+
+    if is_nil(user) do
+      %Auth.Info{first_name: first_name, name: name, email: email} = info
+      user = User |> where([u], u.name == ^first_name or u.name == ^name or u.email == ^email) |> Repo.one()
+
+      if is_nil(user) do
+        :invalid
+      else
+        {:ok,
+         User.changeset(user, %{facebook_id: uid})
+         |> Repo.update!()}
+      end
+    else
+      {:ok, user}
     end
   end
 

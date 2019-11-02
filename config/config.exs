@@ -32,10 +32,23 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
+# Use Jason for JSON parsing in Phoenix and Oauth2
 config :phoenix, :json_library, Jason
+config :oauth2, serializers: %{"application/json" => Jason}
 
 config :gettext, :default_locale, "et"
+
+# Configure authentication providers
+config :ueberauth, Ueberauth,
+  json_library: Jason,
+  providers: [
+    identity: {Ueberauth.Strategy.Identity, [callback_methods: ["POST"]]},
+    facebook: {Ueberauth.Strategy.Facebook, [profile_fields: "name,email,first_name,last_name"]}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
+  client_id: "2405378589722224",
+  client_secret: "4bfc24b1e76803bba43b1d6e159eee3c"
 
 config :secret_santa, SecretSanta.Mailer,
   adapter: Bamboo.SMTPAdapter,

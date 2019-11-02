@@ -17,11 +17,18 @@ defmodule SecretSantaWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/login/:id", AuthController, :login
-    post "/login/:id", AuthController, :auth
 
     post "/wish", WishController, :change_wish
     post "/wish/pool", WishController, :create_pool
+  end
+
+  scope "/auth", SecretSantaWeb do
+    pipe_through :browser
+
+    get "/", AuthController, :login_index
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/identity/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
