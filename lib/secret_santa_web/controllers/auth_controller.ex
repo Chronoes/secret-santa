@@ -1,7 +1,6 @@
 defmodule SecretSantaWeb.AuthController do
   use SecretSantaWeb, :controller
   alias SecretSanta.Accounts
-  alias Ueberauth.Auth
 
   plug Ueberauth
   plug :layout_assigns

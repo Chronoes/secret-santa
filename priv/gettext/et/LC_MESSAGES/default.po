@@ -24,7 +24,7 @@ msgid "hello.name"
 msgstr "Tere, %{name}"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:8
+#: lib/secret_santa_web/templates/auth/login.html.eex:17
 msgid "login"
 msgstr "Logi sisse"
 
@@ -34,7 +34,7 @@ msgid "noTarget"
 msgstr "Hetkel puudub sulle loositud kingisaaja"
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:4
+#: lib/secret_santa_web/templates/auth/login.html.eex:14
 msgid "password"
 msgstr "Parool"
 
@@ -99,8 +99,18 @@ msgstr "Tema soov"
 msgid "otherWishes"
 msgstr "Hallatud soovid"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:79
 #: lib/secret_santa_web/templates/page/index.html.eex:79
 msgid "isManagedBy"
 msgstr "Haldab"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/auth/login.html.eex:5
+msgid "facebookLogin"
+msgstr "Logi sisse Facebook'iga"
+
+#, elixir-format
+#: lib/secret_santa_web/templates/auth/login.html.eex:10
+msgid "username"
+msgstr "Nimi"

@@ -9,11 +9,15 @@ defmodule SecretSantaWeb.WishController do
     current_user = get_session(conn, "user")
     current_year = conn.assigns.year
 
-    wish_result =
+    changeset =
       (Gifting.get_current_wish(current_user, current_year) |> SecretSanta.Repo.preload([:user]) || %Gifting.Wish{})
-      |> Gifting.upsert_wish(%{year: current_year, wish: wish_text, user: current_user})
+      |> Gifting.Wish.changeset(%{
+        year: current_year,
+        wish: wish_text,
+        user: current_user
+      })
 
-    case wish_result do
+    case Gifting.upsert_wish(changeset) do
       {:ok, wish} ->
         case Gifting.get_current_gifting_pair(wish.year, receiver: wish.user)
              |> SecretSanta.Repo.preload([:gifter]) do
@@ -21,13 +25,16 @@ defmodule SecretSantaWeb.WishController do
             nil
 
           pair ->
-            SecretSantaWeb.Emails.wish_changed_email(pair.gifter.email, %{
-              year: wish.year,
-              gifter: pair.gifter,
-              receiver: wish.user,
-              wish: wish.wish
-            })
-            |> SecretSanta.Mailer.deliver_later()
+            # Send mail if wish has changed
+            unless is_nil(Ecto.Changeset.get_change(changeset, :wish)) do
+              SecretSantaWeb.Emails.wish_changed_email(pair.gifter.email, %{
+                year: wish.year,
+                gifter: pair.gifter,
+                receiver: wish.user,
+                wish: wish.wish
+              })
+              |> SecretSanta.Mailer.deliver_later()
+            end
         end
 
         process_other_wishes(params, current_user, current_year)
@@ -47,7 +54,12 @@ defmodule SecretSantaWeb.WishController do
     |> Enum.filter(fn {user, wish} -> wish != "" && Accounts.is_managed_by?(user, current_user) end)
     |> Enum.map(fn {user, wish} ->
       (Gifting.get_current_wish(user, current_year) |> SecretSanta.Repo.preload([:user]) || %Gifting.Wish{})
-      |> Gifting.upsert_wish(%{year: current_year, wish: wish, user: user})
+      |> Gifting.Wish.changeset(%{
+        year: current_year,
+        wish: wish,
+        user: user
+      })
+      |> Gifting.upsert_wish()
     end)
   end
 

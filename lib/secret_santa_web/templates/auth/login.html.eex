@@ -1,5 +1,11 @@
 <section class="login">
-  <a href="<%= @facebook_request_url %>" class="btn btn-primary">Facebook</a>
+  <div class="social-login">
+    <a href="<%= @facebook_request_url %>" class="btn btn-facebook">
+      <i class="icon-facebook"></i>
+      <%= gettext("facebookLogin") %>
+    </a>
+  </div>
+  <hr/>
   <%= form_tag @identity_callback_url, method: "post" do %>
     <div class="form-group">
       <label for="username"><%= gettext("username") %></label>
