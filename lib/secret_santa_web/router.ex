@@ -17,6 +17,7 @@ defmodule SecretSantaWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/privacy", PrivacyController, :privacy
 
     post "/wish", WishController, :change_wish
     post "/wish/pool", WishController, :create_pool

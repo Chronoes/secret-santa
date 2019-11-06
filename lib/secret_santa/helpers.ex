@@ -33,9 +33,20 @@ defmodule SecretSanta.Helpers do
   def add_tz_to_datetime(datetime) do
     {:ok, datetimetz} =
       DateTime.from_naive!(datetime, "Etc/UTC")
-      |> DateTime.shift_zone(Application.get_env(:secret_santa, :timezone))
+      |> DateTime.shift_zone(get_default_tz())
 
     datetimetz
+  end
+
+  @spec get_default_tz :: binary()
+  def get_default_tz do
+    Application.get_env(:secret_santa, :timezone)
+  end
+
+  @spec datetime_now :: DateTime.t()
+  def datetime_now do
+    {:ok, datetime} = DateTime.now(SecretSanta.Helpers.get_default_tz())
+    datetime
   end
 
   @spec format_short_date(DateTime.t() | NaiveDateTime.t()) :: binary()

@@ -28,7 +28,7 @@
   <body>
     <header>
       <section class="container text-center">
-        <h1 class=""><%= "#{gettext("christmas")} #{@year}" %></h1>
+        <h1 class=""><%= "#{gettext("christmas")} #{SecretSanta.Helpers.datetime_now().year}" %></h1>
       </section>
     </header>
     <main role="main" class="container">
