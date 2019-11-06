@@ -87,10 +87,10 @@ defmodule SecretSanta.Gifting do
     |> Repo.update()
   end
 
-  def upsert_wish(%Wish{} = wish, attrs) do
+  @spec upsert_wish(Ecto.Changeset.t()) :: any
+  def upsert_wish(%Ecto.Changeset{params: params} = wish) do
     wish
-    |> Wish.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:user, attrs.user)
+    |> Ecto.Changeset.put_assoc(:user, params["user"])
     |> Repo.insert_or_update()
   end
 

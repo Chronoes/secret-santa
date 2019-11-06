@@ -27,13 +27,15 @@ defmodule SecretSanta.Accounts.User do
     has_many(:gift_targets, GiftingPool, foreign_key: :gifter_id)
     has_many(:gift_givers, GiftingPool, foreign_key: :receiver_id)
 
+    field :facebook_id, :string
+
     timestamps()
   end
 
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :password, :plain_password, :email, :is_admin])
+    |> cast(attrs, [:name, :password, :plain_password, :email, :is_admin, :facebook_id])
     |> validate_required([:name, :password, :is_admin])
   end
 end

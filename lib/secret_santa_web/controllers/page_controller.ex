@@ -66,9 +66,7 @@ defmodule SecretSantaWeb.PageController do
   def require_auth(conn, _opts) do
     if is_nil(get_session(conn, "user")) do
       conn
-      |> put_status(401)
-      |> put_view(SecretSantaWeb.ErrorView)
-      |> render(:"401")
+      |> redirect(to: Routes.auth_path(conn, :login_index))
       |> halt()
     else
       conn

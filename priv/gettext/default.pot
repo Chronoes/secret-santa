@@ -23,7 +23,7 @@ msgid "hello.name"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:8
+#: lib/secret_santa_web/templates/auth/login.html.eex:17
 msgid "login"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgid "noTarget"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:4
+#: lib/secret_santa_web/templates/auth/login.html.eex:14
 msgid "password"
 msgstr ""
 
@@ -102,4 +102,14 @@ msgstr ""
 #: lib/secret_santa_web/templates/page/index.html.eex:79
 #: lib/secret_santa_web/templates/page/index.html.eex:79
 msgid "isManagedBy"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/auth/login.html.eex:5
+msgid "facebookLogin"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/auth/login.html.eex:10
+msgid "username"
 msgstr ""
