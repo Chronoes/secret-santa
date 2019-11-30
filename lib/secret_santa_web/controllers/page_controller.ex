@@ -13,9 +13,7 @@ defmodule SecretSantaWeb.PageController do
     current_user = get_session(conn, "user")
     current_year = conn.assigns.year
 
-    wishes =
-      Gifting.list_current_wishes(current_year)
-      |> Repo.preload([:user])
+    wishes = Gifting.list_current_wishes(current_year)
 
     current_user =
       Map.put(
@@ -28,6 +26,7 @@ defmodule SecretSantaWeb.PageController do
     users =
       if current_user.is_admin do
         Accounts.list_users()
+        |> Enum.sort(&(&1.name <= &2.name))
       else
         []
       end

@@ -23,7 +23,7 @@ msgid "hello.name"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:17
+#: lib/secret_santa_web/templates/auth/login.html.eex:18
 msgid "login"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgid "noTarget"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:14
+#: lib/secret_santa_web/templates/auth/login.html.eex:15
 msgid "password"
 msgstr ""
 
@@ -48,8 +48,8 @@ msgid "updated"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/controllers/wish_controller.ex:59
-#: lib/secret_santa_web/controllers/wish_controller.ex:59
+#: lib/secret_santa_web/controllers/wish_controller.ex:72
+#: lib/secret_santa_web/controllers/wish_controller.ex:72
 msgid "wish"
 msgstr ""
 
@@ -110,6 +110,11 @@ msgid "facebookLogin"
 msgstr ""
 
 #, elixir-format
-#: lib/secret_santa_web/templates/auth/login.html.eex:10
+#: lib/secret_santa_web/templates/auth/login.html.eex:11
 msgid "username"
+msgstr ""
+
+#, elixir-format
+#: lib/secret_santa_web/templates/page/index.html.eex:89
+msgid "sendEmails"
 msgstr ""

@@ -12,7 +12,7 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :secret_santa,
   ecto_repos: [SecretSanta.Repo],
-  timezone: System.get_env("TZ")
+  timezone: System.fetch_env!("TZ")
 
 # Configures the endpoint
 config :secret_santa, SecretSantaWeb.Endpoint,

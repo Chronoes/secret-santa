@@ -24,7 +24,10 @@ defmodule SecretSanta.Gifting do
 
   def list_current_wishes(year) do
     Wish
-    |> where([w], w.year == ^year)
+    |> join(:inner, [w], u in assoc(w, :user))
+    |> select([w, u], %{w | user: u})
+    |> where([w, _u], w.year == ^year)
+    |> order_by([_w, u], asc: u.name)
     |> Repo.all()
   end
 
@@ -250,4 +253,11 @@ defmodule SecretSanta.Gifting do
   end
 
   def get_current_gifting_pair(_year, _opts), do: raise("Missing gifter or receiver")
+
+  def get_all_gifting_pairs(year) do
+    GiftingPool
+    |> where([gp], gp.year == ^year)
+    |> Repo.all()
+    |> Repo.preload([:gifter, :receiver])
+  end
 end

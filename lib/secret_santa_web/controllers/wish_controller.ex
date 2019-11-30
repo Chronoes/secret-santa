@@ -2,6 +2,7 @@ defmodule SecretSantaWeb.WishController do
   use SecretSantaWeb, :controller
   alias SecretSanta.Accounts
   alias SecretSanta.Gifting
+  alias SecretSanta.Gifting.GiftingPool
 
   plug :layout_assigns
 
@@ -75,9 +76,7 @@ defmodule SecretSantaWeb.WishController do
   def create_pool(conn, %{"receivers" => receivers} = _params) do
     current_year = conn.assigns.year
 
-    users =
-      Gifting.get_gift_receivers(current_year, receivers)
-      |> Enum.map(&Accounts.change_user_password/1)
+    users = Gifting.get_gift_receivers(current_year, receivers)
 
     SecretSanta.Helpers.pair_up(users)
     |> Enum.each(fn {gifter, receiver} ->
@@ -88,7 +87,22 @@ defmodule SecretSantaWeb.WishController do
         gifter: gifter,
         receiver: receiver
       })
+    end)
 
+    conn |> redirect(to: "/")
+  end
+
+  def send_emails(conn, _params) do
+    current_year = conn.assigns.year
+
+    pairs = Gifting.get_all_gifting_pairs(current_year)
+
+    pairs
+    |> Enum.map(fn pair ->
+      gifter = Accounts.change_user_password(pair.gifter)
+      %GiftingPool{pair | gifter: gifter}
+    end)
+    |> Enum.each(fn %GiftingPool{gifter: gifter, receiver: receiver} ->
       SecretSantaWeb.Emails.gifter_email(gifter.email, %{
         year: current_year,
         gifter: gifter,

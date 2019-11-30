@@ -21,6 +21,7 @@ defmodule SecretSantaWeb.Router do
 
     post "/wish", WishController, :change_wish
     post "/wish/pool", WishController, :create_pool
+    post "/wish/emails", WishController, :send_emails
   end
 
   scope "/auth", SecretSantaWeb do

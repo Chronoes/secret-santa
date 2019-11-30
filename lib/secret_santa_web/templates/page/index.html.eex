@@ -69,13 +69,13 @@
 <hr>
 <section class="admin">
   <h2><%= gettext("adminSection") %></h2>
-  <%= form_for @conn, Routes.wish_path(@conn, :create_pool), fn _f -> %>
+  <%= form_tag Routes.wish_path(@conn, :create_pool), method: "post" do %>
   <ul class="checkbox-list">
     <%= for user <- @users do %>
     <li>
       <label>
       <input type="checkbox" name="receivers[]" value="<%= user.id %>"<%= if Enum.empty?(user.managers) do %> checked<% end %>>
-        <%= "#{user.name} (#{user.email})" %>
+        <%= user.name %> <%= unless is_nil(user.email) do "(#{user.email})" end %>
         <%= unless Enum.empty?(user.managers) do %><span class="text-muted"><%=" #{gettext("isManagedBy")}: #{Enum.map_join(user.managers, ", ", &(&1.name))}" %></span><% end %>
       </label>
     </li>
@@ -83,6 +83,10 @@
   </ul>
 
   <button type="submit" class="btn btn-primary"><%= gettext("createPool") %></button>
+  <% end %>
+  <br />
+  <%= form_tag Routes.wish_path(@conn, :send_emails), method: "post" do %>
+  <button type="submit" class="btn btn-primary"><%= gettext("sendEmails") %></button>
   <% end %>
 </section>
 <% end %>
