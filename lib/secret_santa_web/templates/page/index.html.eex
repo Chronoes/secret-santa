@@ -18,7 +18,7 @@
   <% end %>
   <%= form_for @conn, Routes.wish_path(@conn, :change_wish), fn _f -> %>
   <fieldset class="wish-inputs">
-    <div class="form-group">
+    <div class="form-group row">
       <label class="d-block text-bold" for="wish"><%= gettext("yourWish") %>
         <%= if is_nil(@user.current_wish) do %>
         <span class="text-danger">(<%= gettext("pleaseAddYourWish") %>)</span>
@@ -32,7 +32,7 @@
   <h3><%= gettext("otherWishes") %></h3>
   <fieldset class="wish-inputs">
     <%= for user <- @user.managed_users do %>
-    <div class="form-group">
+    <div class="form-group row">
       <label class="d-block text-bold" for="wish-<%= user.id %>"><%= user.name %></label>
       <textarea name="wishes[<%= user.id %>]" id="wish-<%= user.id %>" rows="3"><%= user.current_wish && user.current_wish.wish %></textarea>
     </div>

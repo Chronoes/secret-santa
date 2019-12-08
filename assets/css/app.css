@@ -2,10 +2,6 @@
 
 @import './bootstrap.css';
 
-label + input {
-  margin-left: 0.5rem;
-}
-
 .text-center {
   text-align: center;
 }
