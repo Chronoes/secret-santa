@@ -12,14 +12,14 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 config :secret_santa,
   ecto_repos: [SecretSanta.Repo],
-  timezone: System.fetch_env!("TZ")
+  timezone: System.get_env("TZ", "Europe/Tallinn")
 
 # Configures the endpoint
 config :secret_santa, SecretSantaWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "EH8AO29qimUAT22bTU2VjPECc1sFtPgcbYe8IkEKi7rVoKMTL+QYTdtVDZ9lunfX",
   render_errors: [view: SecretSantaWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: SecretSanta.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: SecretSanta.PubSub
 
 config :secret_santa, Plug.Session,
   store: :cookie,

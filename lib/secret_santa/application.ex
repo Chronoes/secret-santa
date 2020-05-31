@@ -11,7 +11,9 @@ defmodule SecretSanta.Application do
       # Start the Ecto repository
       SecretSanta.Repo,
       # Start the endpoint when the application starts
-      SecretSantaWeb.Endpoint
+      SecretSantaWeb.Endpoint,
+      # Pubsub application
+      {Phoenix.PubSub, [name: SecretSanta.PubSub, adapter: Phoenix.PubSub.PG2]}
       # Starts a worker by calling: SecretSanta.Worker.start_link(arg)
       # {SecretSanta.Worker, arg},
     ]

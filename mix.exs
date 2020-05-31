@@ -33,8 +33,7 @@ defmodule SecretSanta.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.0"},
-      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
@@ -42,15 +41,17 @@ defmodule SecretSanta.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:plug_cowboy, "~> 2.1"},
       {:bcrypt_elixir, "~> 2.0"},
-      {:bamboo, "~> 1.1"},
-      {:bamboo_smtp, "~> 1.7"},
+      {:bamboo, "~> 1.5"},
+      {:bamboo_smtp, "~> 2.1"},
       {:distillery, "~> 2.0"},
       {:tzdata, "~> 1.0.1"},
       {:ueberauth, "~> 0.6"},
       {:ueberauth_identity, "~> 0.2"},
-      {:ueberauth_facebook, "~> 0.8"}
+      {:ueberauth_facebook, "~> 0.8"},
+      # Due to compilation issues, restricted sub-dependency hackney to this version
+      {:hackney, "~> 1.15.0"}
     ]
   end
 
