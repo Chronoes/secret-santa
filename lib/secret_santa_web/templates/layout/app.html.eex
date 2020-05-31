@@ -25,21 +25,24 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="favicon-author" content="Icon made by Freepik (https://www.freepik.com) from https://www.flaticon.com">
   </head>
-  <body>
-    <header>
-      <section class="container text-center">
+  <body class="body-container">
+    <header class="container-fluid page-header">
+      <section class="text-center">
         <h1 class=""><%= "#{gettext("christmas")} #{SecretSanta.Helpers.datetime_now().year}" %></h1>
       </section>
     </header>
-    <main role="main" class="container">
-      <%= if get_flash(@conn, :info) do %>
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <% end %>
-      <%= if get_flash(@conn, :error) do %>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <% end %>
-      <%= @inner_content %>
+    <main role="main" class="main-content snowflakes">
+      <div class="container">
+        <%= if get_flash(@conn, :info) do %>
+        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+        <% end %>
+        <%= if get_flash(@conn, :error) do %>
+        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        <% end %>
+        <%= @inner_content %>
+      </div>
     </main>
+    <footer class="container-fluid page-footer"></footer>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
