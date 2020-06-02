@@ -1,13 +1,15 @@
 // Snow from https://codepen.io/radum/pen/xICAB
-var COUNT = 30;
+var MAX_COUNT = 60;
+var ANIMATED_COUNT_RATIO = 0.5;
 var masthead;
 var width;
 var height;
-var active = false;
+var animationActive = false;
 var gracefulHalt = false;
+var staticBgActive = false;
 
 var canvas = document.createElement('canvas');
-var ctx = canvas.getContext('2d');
+var canvasCtx = canvas.getContext('2d');
 
 canvas.style.position = 'absolute';
 canvas.style.left = canvas.style.top = '0';
@@ -17,6 +19,8 @@ function setContainerBounds() {
   const bounds = masthead.getBoundingClientRect();
   width = bounds.right;
   height = bounds.bottom;
+  canvas.width = width;
+  canvas.height = height;
 }
 
 var Snowflake = function () {
@@ -40,54 +44,100 @@ Snowflake.prototype.reset = function () {
 };
 
 var snowflakes = [];
-var snowflake;
+var animatedFlakes = [];
+
+function drawSnowflakeOnCanvas(ctx, snowflake) {
+  ctx.globalAlpha = snowflake.o;
+  ctx.beginPath();
+  ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
+  ctx.closePath();
+  ctx.fill();
+}
 
 function update() {
-  ctx.clearRect(0, 0, width, height);
+  canvasCtx.clearRect(0, 0, width, height);
 
-  if (!active) return;
+  if (!animationActive) return;
 
-  for (var i = 0; i < COUNT; i++) {
-    snowflake = snowflakes[i];
+  canvasCtx.fillStyle = '#FFF';
+  animatedFlakes.forEach((snowflake) => {
     if (snowflake.halted) {
-      continue;
+      return;
     }
+
     snowflake.y += snowflake.vy;
     snowflake.x += snowflake.vx;
 
-    ctx.globalAlpha = snowflake.o;
-    ctx.beginPath();
-    ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
-    ctx.closePath();
-    ctx.fill();
+    drawSnowflakeOnCanvas(canvasCtx, snowflake);
 
     if (snowflake.y > height) {
       snowflake.halted = gracefulHalt;
       snowflake.reset();
     }
-  }
+  });
 
-  if (gracefulHalt && snowflakes.every((snowflake) => snowflake.halted)) {
-    active = false;
+  if (gracefulHalt && animatedFlakes.every((snowflake) => snowflake.halted)) {
+    animationActive = false;
   }
   requestAnimFrame(update);
 }
 
+function createStaticBackground() {
+  staticBgActive = true;
+  canvasCtx.fillStyle = '#FFF';
+  var toRender = width > 600 ? snowflakes : snowflakes.slice(0, Math.floor(snowflakes.length / 2));
+  toRender.forEach((snowflake) => {
+    snowflake.y = Math.abs(snowflake.y);
+    drawSnowflakeOnCanvas(canvasCtx, snowflake);
+  });
+}
+
+function runAnimations() {
+  var wasActive = animationActive;
+  // Disabled for mobile-size screens
+  animationActive = width > 600;
+
+  if (!wasActive && animationActive) {
+    if (staticBgActive) {
+      animatedFlakes.forEach((snowflake) => {
+        snowflake.reset();
+      });
+    }
+    requestAnimFrame(update);
+  }
+
+  return animationActive;
+}
+
 function onResize() {
   setContainerBounds();
-  canvas.width = width;
-  canvas.height = height;
-  ctx.fillStyle = '#FFF';
 
-  var wasActive = active;
-  // Disabled for mobile-size screens
-  active = width > 600;
-
-  if (!wasActive && active) requestAnimFrame(update);
+  runAnimations();
+  if (width <= 600 && !staticBgActive) {
+    createStaticBackground();
+  }
 }
 
 function onBlur() {
-  active = false;
+  animationActive = false;
+}
+
+function onFocus() {
+  runAnimations();
+}
+
+function resetVariables() {
+  setContainerBounds();
+  animationActive = false;
+  staticBgActive = false;
+  gracefulHalt = false;
+  snowflakes = [];
+  for (var i = 0; i < MAX_COUNT; i++) {
+    var snowflake = new Snowflake();
+    snowflake.reset();
+    snowflakes.push(snowflake);
+  }
+  animatedFlakes = snowflakes.slice(0, Math.floor(MAX_COUNT * ANIMATED_COUNT_RATIO));
 }
 
 export default function snowfall(element) {
@@ -96,33 +146,18 @@ export default function snowfall(element) {
     return () => {};
   }
   masthead = element;
-  setContainerBounds();
-
-  gracefulHalt = false;
-  if (snowflakes.length === 0) {
-    for (var i = 0; i < COUNT; i++) {
-      snowflake = new Snowflake();
-      snowflake.reset();
-      snowflakes.push(snowflake);
-    }
-  } else {
-    for (var i = 0; i < COUNT; i++) {
-      snowflake = snowflakes[i];
-      snowflake.reset();
-      snowflake.halted = false;
-    }
-  }
+  resetVariables();
   onResize();
   window.addEventListener('resize', onResize, { passive: true });
   window.addEventListener('blur', onBlur, { passive: true });
-  window.addEventListener('focus', onResize, { passive: true });
+  window.addEventListener('focus', onFocus, { passive: true });
 
   masthead.appendChild(canvas);
 
   return () => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('blur', onBlur);
-    window.removeEventListener('focus', onResize);
+    window.removeEventListener('focus', onFocus);
     gracefulHalt = true;
   };
 }

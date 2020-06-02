@@ -49,9 +49,7 @@ defmodule SecretSanta.MixProject do
       {:tzdata, "~> 1.0.1"},
       {:ueberauth, "~> 0.6"},
       {:ueberauth_identity, "~> 0.2"},
-      {:ueberauth_facebook, "~> 0.8"},
-      # Due to compilation issues, restricted sub-dependency hackney to this version
-      {:hackney, "~> 1.15.0"}
+      {:ueberauth_facebook, "~> 0.8"}
     ]
   end
 
