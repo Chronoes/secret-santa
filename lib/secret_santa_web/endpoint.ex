@@ -13,8 +13,8 @@ defmodule SecretSantaWeb.Endpoint do
     at: "/",
     from: :secret_santa,
     gzip: true,
-    only: ~w(css fonts images js robots.txt browserconfig.xml manifest.json),
-    only_matching: ~w(favicon apple-icon android-icon ms-icon)
+    only: ~w(fonts img robots.txt browserconfig.xml manifest.json),
+    only_matching: ~w(app favicon apple-icon android-icon ms-icon)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

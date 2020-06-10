@@ -72,6 +72,6 @@ config :secret_santa, SecretSanta.Repo,
   password: "postgres",
   database: "secret_santa_dev",
   hostname: "localhost",
-  pool_size: 10
+  pool_size: 1
 
 import_config "dev.secret.exs"

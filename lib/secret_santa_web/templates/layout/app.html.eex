@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><%= gettext("christmas") %></title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/app.css") %>"/>
     <link rel="apple-touch-icon" sizes="57x57" href="<%= Routes.static_path(@conn, "/apple-icon-57x57.png") %>" />
     <link rel="apple-touch-icon" sizes="60x60" href="<%= Routes.static_path(@conn, "/apple-icon-60x60.png") %>" />
     <link rel="apple-touch-icon" sizes="72x72" href="<%= Routes.static_path(@conn, "/apple-icon-72x72.png") %>" />
@@ -43,6 +43,6 @@
       </div>
     </main>
     <footer class="container-fluid page-footer"></footer>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/app.js") %>"></script>
   </body>
 </html>
