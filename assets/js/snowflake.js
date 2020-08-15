@@ -1,6 +1,6 @@
 // Snow from https://codepen.io/radum/pen/xICAB
-var MAX_COUNT = 60;
-var ANIMATED_COUNT_RATIO = 0.5;
+var MAX_COUNT = 45;
+var ANIMATED_MAX_COUNT = 30;
 var masthead;
 var width;
 var height;
@@ -82,11 +82,18 @@ function update() {
   requestAnimFrame(update);
 }
 
+function useAnimatedBackground() {
+  // return width && width > 600;
+  // Use only static background for now
+  return false;
+}
+
 function createStaticBackground() {
   staticBgActive = true;
   canvasCtx.fillStyle = '#FFF';
   var toRender = width > 600 ? snowflakes : snowflakes.slice(0, Math.floor(snowflakes.length / 2));
   toRender.forEach((snowflake) => {
+    snowflake.reset();
     snowflake.y = Math.abs(snowflake.y);
     drawSnowflakeOnCanvas(canvasCtx, snowflake);
   });
@@ -94,8 +101,7 @@ function createStaticBackground() {
 
 function runAnimations() {
   var wasActive = animationActive;
-  // Disabled for mobile-size screens
-  animationActive = width > 600;
+  animationActive = useAnimatedBackground();
 
   if (!wasActive && animationActive) {
     if (staticBgActive) {
@@ -112,8 +118,7 @@ function runAnimations() {
 function onResize() {
   setContainerBounds();
 
-  runAnimations();
-  if (width <= 600 && !staticBgActive) {
+  if (!runAnimations()) {
     createStaticBackground();
   }
 }
@@ -137,7 +142,7 @@ function resetVariables() {
     snowflake.reset();
     snowflakes.push(snowflake);
   }
-  animatedFlakes = snowflakes.slice(0, Math.floor(MAX_COUNT * ANIMATED_COUNT_RATIO));
+  animatedFlakes = snowflakes.slice(0, Math.floor(MAX_COUNT * ANIMATED_MAX_COUNT));
 }
 
 export default function snowfall(element) {

@@ -25,7 +25,8 @@ config :secret_santa, Plug.Session,
   store: :cookie,
   key: "_secret_santa_key",
   signing_salt: "QqCDJAC4",
-  max_age: 7200
+  max_age: 7200,
+  same_site: "Strict"
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -55,10 +56,6 @@ config :secret_santa, SecretSanta.Mailer,
   server: "smtp.fastmail.com",
   port: 465,
   hostname: "tarkin.ee",
-  # username: {:system, "FASTMAIL_USERNAME"},
-  # password: {:system, "FASTMAIL_PASSWORD"}
-  username: "marten@tarkin.ee",
-  password: "dwtt2ks2ewtbcbud",
   tls: :if_available,
   ssl: true
 

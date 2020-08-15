@@ -4,6 +4,7 @@
   subdirectories: ["priv/*/migrations"],
   line_length: 120,
   locals_without_parens: [
-    set: 2
+    set: 2,
+    throw: 1
   ]
 ]
