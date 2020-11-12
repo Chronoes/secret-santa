@@ -7,5 +7,5 @@
 </p>
 
 <p>
-  <%= convert_to_hyperlinks(@wish) |> unsafe_to_safe() %>
+  <%= convert_to_hyperlinks(@wish) %>
 </p>
