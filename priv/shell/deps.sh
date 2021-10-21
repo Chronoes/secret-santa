@@ -16,3 +16,5 @@ cd assets && npm run deploy && cd ..
 mkdir -p _build/favicons
 unzip $favicons_zip -x '*.md' '*.html' -d _build/favicons
 mv _build/favicons/* priv/static
+
+mix phx.digest
