@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :secret_santa, SecretSantaWeb.Endpoint,
   http: [:inet6, port: {:system, "PORT"}],
-  url: [scheme: "https", host: "joulud.tarkin.ee"],
+  url: [scheme: "https", host: "joulud.tarkin.ee", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   root: "."
