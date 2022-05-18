@@ -1,0 +1,1 @@
+/config/*.secret.exs filter=git-crypt diff=git-crypt
