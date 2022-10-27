@@ -254,10 +254,33 @@ defmodule SecretSanta.Gifting do
 
   def get_current_gifting_pair(_year, _opts), do: raise("Missing gifter or receiver")
 
+  @spec get_all_gifting_pairs(year :: integer()) :: [GiftingPool.t()]
   def get_all_gifting_pairs(year) do
     GiftingPool
     |> where([gp], gp.year == ^year)
     |> Repo.all()
     |> Repo.preload([:gifter, :receiver])
+  end
+
+  @spec create_unique_pairs_of_year(users :: [User.t()], year :: integer()) :: [{User.t(), User.t()}]
+  def create_unique_pairs_of_year(users, year), do: create_unique_pairs(users, get_all_gifting_pairs(year - 1))
+
+  @spec create_unique_pairs(users :: [User.t()], prev_pairs :: [GiftingPool.t()]) :: [{User.t(), User.t()}]
+  def create_unique_pairs(users, prev_pairs) when length(users) <= 2 or length(prev_pairs) == 0,
+    do: SecretSanta.Helpers.pair_up(users)
+
+  def create_unique_pairs(users, prev_pairs) do
+    pairs = SecretSanta.Helpers.pair_up(users)
+
+    any_nonuniques? =
+      Enum.any?(pairs, fn {gifter, receiver} ->
+        Enum.any?(prev_pairs, &(&1.gifter == gifter and &1.receiver == receiver))
+      end)
+
+    if any_nonuniques? do
+      create_unique_pairs(users, prev_pairs)
+    else
+      pairs
+    end
   end
 end
