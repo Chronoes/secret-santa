@@ -1,13 +1,13 @@
 const path = require('path');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, options) => ({
   optimization: {
-    minimizer: [new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }), new OptimizeCSSAssetsPlugin({})],
+    minimize: true,
+    minimizer: ['...', new CssMinimizerPlugin()],
   },
   entry: {
     './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js')),
@@ -31,15 +31,10 @@ module.exports = (env, options) => ({
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-              publicPath: '/',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[hash][ext][query]',
+        },
       },
     ],
   },

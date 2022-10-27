@@ -65,6 +65,7 @@
 [type='submit'],
 button,
 html [type='button'] {
+  appearance: button;
   -webkit-appearance: button;
 }
 

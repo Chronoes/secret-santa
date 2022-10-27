@@ -6,17 +6,19 @@
     </a>
   </div>
   <hr/>
-  <%= form_tag @identity_callback_url, method: "post" do %>
-    <div class="form-group">
-      <label for="username"><%= gettext("username") %></label>
-      <input type="text" name="username" id="username" value="<%= @conn.params["username"] %>">
-    </div>
-    <div class="form-group">
-      <label for="password"><%= gettext("password") %></label>
-      <input type="password" name="password" id="password">
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary"><%= gettext("login") %></button>
-    </div>
-  <% end %>
+  <div class="col-md-5">
+    <%= form_tag @identity_callback_url, method: "post" do %>
+      <div class="form-group">
+        <label for="username"><%= gettext("username") %></label>
+        <input type="text" name="username" id="username" value="<%= @conn.params["username"] %>">
+      </div>
+      <div class="form-group">
+        <label for="password"><%= gettext("password") %></label>
+        <input type="password" name="password" id="password">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary"><%= gettext("login") %></button>
+      </div>
+    <% end %>
+  </div>
 </section>
