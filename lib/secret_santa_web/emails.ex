@@ -20,7 +20,7 @@ defmodule SecretSantaWeb.Emails do
   defp new_santa_email() do
     new_email()
     |> from("joulud@tarkin.ee")
-    |> put_text_layout({SecretSantaWeb.LayoutView, "email.text"})
-    |> put_html_layout({SecretSantaWeb.LayoutView, "email.html"})
+    |> put_text_layout({SecretSantaWeb.Layouts, "email.text"})
+    |> put_html_layout({SecretSantaWeb.Layouts, "email.html"})
   end
 end

@@ -17,8 +17,12 @@ config :secret_santa,
 # Configures the endpoint
 config :secret_santa, SecretSantaWeb.Endpoint,
   url: [host: "localhost"],
+  adapter: Phoenix.Endpoint.Cowboy2Adapter,
   secret_key_base: "EH8AO29qimUAT22bTU2VjPECc1sFtPgcbYe8IkEKi7rVoKMTL+QYTdtVDZ9lunfX",
-  render_errors: [view: SecretSantaWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [
+    formats: [html: SecretSantaWeb.ErrorHTML, json: SecretSantaWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: SecretSanta.PubSub
 
 config :secret_santa, Plug.Session,
@@ -27,6 +31,16 @@ config :secret_santa, Plug.Session,
   signing_salt: "QqCDJAC4",
   max_age: 7200,
   same_site: "Strict"
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  default: [
+    args:
+      ~w(js/app.js css/app.css --bundle --target=es2017 --loader:.png=file --outdir=../priv/static/assets --external:/fonts/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

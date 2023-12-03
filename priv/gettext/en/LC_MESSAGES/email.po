@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Language: en\n"
-"Plural-Forms: nplurals=2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#, elixir-format
 #: lib/secret_santa_web/emails.ex:9
+#, elixir-format
 msgid "secretSanta"
 msgstr "Secret Santa %{year}"
 
-#, elixir-format
 #: lib/secret_santa_web/emails.ex:16
+#, elixir-format
 msgid "secretSanta.wishChanged"
 msgstr "Secret Santa %{year}"

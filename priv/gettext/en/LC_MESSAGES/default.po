@@ -9,105 +9,105 @@
 msgid ""
 msgstr ""
 "Language: en\n"
-"Plural-Forms: nplurals=2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/layout/app.html.eex:7
 #: lib/secret_santa_web/templates/layout/app.html.eex:21
+#, elixir-format
 msgid "christmas"
 msgstr "Christmas"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:2
+#, elixir-format
 msgid "hello.name"
 msgstr "Hello, %{name}"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/auth/login.html.eex:19
+#, elixir-format
 msgid "login"
 msgstr "Login"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:5
+#, elixir-format
 msgid "noTarget"
 msgstr "You have no target yet"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/auth/login.html.eex:15
+#, elixir-format
 msgid "password"
 msgstr "Password"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:7
+#, elixir-format
 msgid "secretSanta.name"
 msgstr "You will be a Secret Santa to %{name}"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:62
+#, elixir-format
 msgid "updated"
 msgstr "Updated"
 
-#, elixir-format
 #: lib/secret_santa_web/controllers/wish_controller.ex:72
+#, elixir-format
 msgid "wish"
 msgstr "Wish"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:74
+#, elixir-format
 msgid "adminSection"
 msgstr "Admin"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:46
+#, elixir-format
 msgid "changeWish"
 msgstr "Change wish"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:88
+#, elixir-format
 msgid "createPool"
 msgstr "Create pool"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:25
+#, elixir-format
 msgid "yourWish"
 msgstr "Your wish"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:27
+#, elixir-format
 msgid "pleaseAddYourWish"
 msgstr ""
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:52
+#, elixir-format
 msgid "allWishes"
 msgstr ""
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:14
+#, elixir-format
 msgid "noCurrentWish"
 msgstr "Your wish"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:35
+#, elixir-format
 msgid "otherWishes"
 msgstr "Managed wishes"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:82
+#, elixir-format
 msgid "isManagedBy"
 msgstr "Managed by"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/auth/login.html.eex:5
+#, elixir-format
 msgid "facebookLogin"
 msgstr "Login with Facebook"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/auth/login.html.eex:11
+#, elixir-format
 msgid "username"
 msgstr "Name"
 
-#, elixir-format
 #: lib/secret_santa_web/templates/page/index.html.eex:92
+#, elixir-format
 msgid "sendEmails"
 msgstr "Send emails"

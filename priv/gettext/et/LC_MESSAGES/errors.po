@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Language: et\n"
-"Plural-Forms: nplurals=2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "can't be blank"
 msgstr "ei tohi olla tühi"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "must be equal to %{number}"
 msgstr ""
 
-#, elixir-format
 #: lib/secret_santa_web/controllers/auth_controller.ex:29
+#, elixir-format
 msgid "invalidLogin"
 msgstr "Vigane parool"

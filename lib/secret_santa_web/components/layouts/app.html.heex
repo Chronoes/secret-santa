@@ -1,0 +1,18 @@
+<header class="container-fluid page-header">
+  <h1 class="flex-center">
+    <img class="header-logo" src={~p"/android-chrome-192x192.png"} height="192" width="192" />
+    <%= "#{gettext("christmas")} #{SecretSanta.Helpers.datetime_now().year}" %>
+  </h1>
+</header>
+<main role="main" class="main-content snowflakes">
+  <div class="container">
+    <%= if Flash.get(@flash, :info) do %>
+    <p class="alert alert-info" role="alert"><%= Flash.get(@flash, :info) %></p>
+    <% end %>
+    <%= if Flash.get(@flash, :error) do %>
+    <p class="alert alert-danger" role="alert"><%= Flash.get(@flash, :error) %></p>
+    <% end %>
+    <%= @inner_content %>
+  </div>
+</main>
+<footer class="container-fluid page-footer"></footer>

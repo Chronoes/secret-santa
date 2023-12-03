@@ -6,16 +6,18 @@ defmodule SecretSantaWeb.AuthController do
   plug :layout_assigns
 
   @spec login_index(Plug.Conn.t(), map()) :: Plug.Conn.t()
-  def login_index(conn, _params) do
+  def login_index(conn, params) do
     render(conn, "login.html", %{
-      identity_callback_url: Routes.auth_path(conn, :callback, "identity"),
-      facebook_request_url: Routes.auth_path(conn, :request, "facebook")
+      auth_changeset: %{
+        "username" => params["username"] || "",
+        "password" => params["password"] || ""
+      }
     })
   end
 
   @spec request(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def request(conn, %{"provider" => "identity"} = _params) do
-    redirect(conn, to: Routes.auth_path(conn, :login_index))
+    redirect(conn, to: ~p"/auth")
   end
 
   @spec callback(Plug.Conn.t(), map()) :: Plug.Conn.t()

@@ -19,7 +19,7 @@
   </div>
   <% end %>
   <hr>
-  <%= form_tag Routes.wish_path(@conn, :change_wish), method: "post" do %>
+  <.form for={@user.current_wish} action={~p"/wish"} method="post">
   <fieldset class="wish-inputs">
     <div class="form-group row">
       <label class="d-block text-bold" for="wish"><%= gettext("yourWish") %>
@@ -36,15 +36,15 @@
   <fieldset class="wish-inputs">
     <%= for user <- @user.managed_users do %>
     <div class="form-group row">
-      <label class="d-block text-bold" for="wish-<%= user.id %>"><%= user.name %></label>
-      <textarea name="wishes[<%= user.id %>]" id="wish-<%= user.id %>" rows="3"><%= user.current_wish && user.current_wish.wish %></textarea>
+      <label class="d-block text-bold" for={"wish-#{user.id}"}><%= user.name %></label>
+      <textarea name={"wishes[#{user.id}]"} id={"wish-#{user.id}"} rows="3"><%= user.current_wish && user.current_wish.wish %></textarea>
     </div>
     <% end %>
   </fieldset>
   <% end %>
 
   <button type="submit" class="btn btn-primary"><%= gettext("changeWish") %></button>
-  <% end %>
+  </.form>
 </section>
 
 <section class="wishes">
@@ -72,12 +72,12 @@
 <hr>
 <section class="admin">
   <h2><%= gettext("adminSection") %></h2>
-  <%= form_tag Routes.wish_path(@conn, :create_pool), method: "post" do %>
+  <.form for={@users} action={~p"/wish/pool"} method="post">
   <ul class="checkbox-list">
     <%= for user <- @users do %>
     <li>
       <label>
-      <input type="checkbox" name="receivers[]" value="<%= user.id %>"<%= if Enum.empty?(user.managers) do %> checked<% end %>>
+      <input type="checkbox" name="receivers[]" value={user.id}><%= if Enum.empty?(user.managers) do %> checked<% end %>>
         <%= user.name %> <%= unless is_nil(user.email) do "(#{user.email})" end %>
         <%= unless Enum.empty?(user.managers) do %><span class="text-muted"><%=" #{gettext("isManagedBy")}: #{Enum.map_join(user.managers, ", ", &(&1.name))}" %></span><% end %>
       </label>
@@ -86,10 +86,10 @@
   </ul>
 
   <button type="submit" class="btn btn-primary"><%= gettext("createPool") %></button>
-  <% end %>
+  </.form>
   <br />
-  <%= form_tag Routes.wish_path(@conn, :send_emails), method: "post" do %>
+  <.form for={%{}} action={~p"/wish/emails"} method="post">
   <button type="submit" class="btn btn-primary"><%= gettext("sendEmails") %></button>
-  <% end %>
+  </.form>
 </section>
 <% end %>

@@ -13,8 +13,8 @@ defmodule SecretSantaWeb.Endpoint do
     at: "/",
     from: :secret_santa,
     gzip: true,
-    only: ~w(fonts img robots.txt),
-    only_matching: ~w(app favicon android-chrome apple-touch-icon safari-pinned-tab mstile site browserconfig)
+    only: SecretSantaWeb.static_paths(),
+    only_matching: ~w(favicon android-chrome apple-touch-icon safari-pinned-tab mstile site browserconfig)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -38,7 +38,7 @@ defmodule SecretSantaWeb.Endpoint do
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
-  plug Plug.Session, Application.get_env(:secret_santa, Plug.Session)
+  plug Plug.Session, Application.compile_env(:secret_santa, Plug.Session)
 
   plug SecretSantaWeb.Router
 end

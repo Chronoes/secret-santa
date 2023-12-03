@@ -7,6 +7,8 @@ defmodule SecretSanta.Gifting do
   alias SecretSanta.Repo
 
   alias SecretSanta.Gifting.Wish
+  alias SecretSanta.Gifting.GiftingGroup
+  alias SecretSanta.Gifting.GiftingGroupUser
   alias SecretSanta.Accounts.User
 
   @doc """
@@ -233,10 +235,10 @@ defmodule SecretSanta.Gifting do
     GiftingPool.changeset(gifting_pool, %{})
   end
 
-  @spec get_gift_receivers(pos_integer(), [pos_integer()]) :: [User.t()]
-  def get_gift_receivers(year, receiver_ids) do
-    User
-    |> where([u, w], u.id in ^receiver_ids)
+  @spec get_gift_receivers(pos_integer(), pos_integer(), [pos_integer()]) :: [User.t()]
+  def get_gift_receivers(year, group_id, receiver_ids) do
+    GiftingGroupUser
+    |> where([u, w], u.group_id == ^group_id and u.user_id in ^receiver_ids)
     |> Repo.all()
     |> Repo.preload(wishes: from(w in Wish, where: w.year == ^year))
   end
@@ -282,5 +284,193 @@ defmodule SecretSanta.Gifting do
     else
       pairs
     end
+  end
+
+  @doc """
+  Returns the list of gifting_groups.
+
+  ## Examples
+
+      iex> list_gifting_groups()
+      [%GiftingGroup{}, ...]
+
+  """
+  def list_gifting_groups do
+    Repo.all(GiftingGroup)
+  end
+
+  @doc """
+  Gets a single gifting_group.
+
+  Raises `Ecto.NoResultsError` if the Gifting group does not exist.
+
+  ## Examples
+
+      iex> get_gifting_group!(123)
+      %GiftingGroup{}
+
+      iex> get_gifting_group!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_gifting_group!(id), do: Repo.get!(GiftingGroup, id)
+
+  @doc """
+  Creates a gifting_group.
+
+  ## Examples
+
+      iex> create_gifting_group(%{field: value})
+      {:ok, %GiftingGroup{}}
+
+      iex> create_gifting_group(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_gifting_group(attrs \\ %{}) do
+    %GiftingGroup{}
+    |> GiftingGroup.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a gifting_group.
+
+  ## Examples
+
+      iex> update_gifting_group(gifting_group, %{field: new_value})
+      {:ok, %GiftingGroup{}}
+
+      iex> update_gifting_group(gifting_group, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_gifting_group(%GiftingGroup{} = gifting_group, attrs) do
+    gifting_group
+    |> GiftingGroup.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a gifting_group.
+
+  ## Examples
+
+      iex> delete_gifting_group(gifting_group)
+      {:ok, %GiftingGroup{}}
+
+      iex> delete_gifting_group(gifting_group)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_gifting_group(%GiftingGroup{} = gifting_group) do
+    Repo.delete(gifting_group)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking gifting_group changes.
+
+  ## Examples
+
+      iex> change_gifting_group(gifting_group)
+      %Ecto.Changeset{data: %GiftingGroup{}}
+
+  """
+  def change_gifting_group(%GiftingGroup{} = gifting_group, attrs \\ %{}) do
+    GiftingGroup.changeset(gifting_group, attrs)
+  end
+
+  @doc """
+  Returns the list of gifting_group_users.
+
+  ## Examples
+
+      iex> list_gifting_group_users()
+      [%GiftingGroupUser{}, ...]
+
+  """
+  def list_gifting_group_users do
+    Repo.all(GiftingGroupUser)
+  end
+
+  @doc """
+  Gets a single gifting_group_user.
+
+  Raises `Ecto.NoResultsError` if the Gifting group user does not exist.
+
+  ## Examples
+
+      iex> get_gifting_group_user!(123)
+      %GiftingGroupUser{}
+
+      iex> get_gifting_group_user!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_gifting_group_user!(id), do: Repo.get!(GiftingGroupUser, id)
+
+  @doc """
+  Creates a gifting_group_user.
+
+  ## Examples
+
+      iex> create_gifting_group_user(%{field: value})
+      {:ok, %GiftingGroupUser{}}
+
+      iex> create_gifting_group_user(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_gifting_group_user(attrs \\ %{}) do
+    %GiftingGroupUser{}
+    |> GiftingGroupUser.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a gifting_group_user.
+
+  ## Examples
+
+      iex> update_gifting_group_user(gifting_group_user, %{field: new_value})
+      {:ok, %GiftingGroupUser{}}
+
+      iex> update_gifting_group_user(gifting_group_user, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_gifting_group_user(%GiftingGroupUser{} = gifting_group_user, attrs) do
+    gifting_group_user
+    |> GiftingGroupUser.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a gifting_group_user.
+
+  ## Examples
+
+      iex> delete_gifting_group_user(gifting_group_user)
+      {:ok, %GiftingGroupUser{}}
+
+      iex> delete_gifting_group_user(gifting_group_user)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_gifting_group_user(%GiftingGroupUser{} = gifting_group_user) do
+    Repo.delete(gifting_group_user)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking gifting_group_user changes.
+
+  ## Examples
+
+      iex> change_gifting_group_user(gifting_group_user)
+      %Ecto.Changeset{data: %GiftingGroupUser{}}
+
+  """
+  def change_gifting_group_user(%GiftingGroupUser{} = gifting_group_user, attrs \\ %{}) do
+    GiftingGroupUser.changeset(gifting_group_user, attrs)
   end
 end

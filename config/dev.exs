@@ -12,14 +12,7 @@ config :secret_santa, SecretSantaWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch",
-      "--watch-options-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
 # ## SSL Support
@@ -56,6 +49,9 @@ config :secret_santa, SecretSantaWeb.Endpoint,
       ~r{lib/secret_santa_web/templates/.*(eex)$}
     ]
   ]
+
+# Enable dev routes for dashboard and mailbox
+config :secret_santa, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

@@ -7,7 +7,7 @@ config :secret_santa, SecretSantaWeb.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Configure your database
 config :secret_santa, SecretSanta.Repo,
@@ -16,3 +16,6 @@ config :secret_santa, SecretSanta.Repo,
   database: "secret_santa_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Initialize plugs at runtime for faster test compilation
+config :phoenix, :plug_init_mode, :runtime

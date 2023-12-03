@@ -3,6 +3,7 @@ defmodule SecretSantaWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
+    plug :put_root_layout, html: {SecretSantaWeb.Layouts, :root}
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery

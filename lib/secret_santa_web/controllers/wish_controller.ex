@@ -76,7 +76,7 @@ defmodule SecretSantaWeb.WishController do
   def create_pool(conn, %{"receivers" => receivers} = _params) do
     current_year = conn.assigns.year
 
-    Gifting.get_gift_receivers(current_year, receivers)
+    Gifting.get_gift_receivers(current_year, 1, receivers)
     |> Gifting.create_unique_pairs_of_year(current_year)
     |> Enum.each(fn {gifter, receiver} ->
       (Gifting.get_current_gifting_pair(current_year, gifter: gifter)
